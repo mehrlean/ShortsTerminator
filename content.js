@@ -1,5 +1,5 @@
 let hiddenElements = [];
-
+let OnYoutube = false;
 function removeElementsWithShorts() {
   console.log('Hiding elements with "/shorts/"');
   const anchors = document.getElementsByTagName('a');
@@ -22,11 +22,27 @@ function restoreHiddenElements() {
   hiddenElements = [];
 }
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+// Check if the current URL is a YouTube domain
+function isYouTubeDomain() {
+  const currentURL = window.location.href;
+  return currentURL.includes('youtube.com');
+}
+
+// Automatically hide shorts elements on page load if on YouTube
+if (isYouTubeDomain()) {
+    OnYoutube = true;
   removeElementsWithShorts();
-  if (request.action === 'hideShorts') {
-    removeElementsWithShorts();
-  } else if (request.action === 'showShorts') {
-    restoreHiddenElements();
+}
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  
+  if(OnYoutube){
+    if (request.action === 'hideShorts') {
+      removeElementsWithShorts();
+    } else if (request.action === 'showShorts') {
+      restoreHiddenElements();
+    }
+
   }
+
 });
