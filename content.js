@@ -21,7 +21,7 @@ function restoreHiddenElements() {
   });
   hiddenElements = [];
 }
-function removeElementsWithShorts() {
+removeElementsWithShorts();
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'hideShorts') {
@@ -30,4 +30,3 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     restoreHiddenElements();
   }
 });
-}
