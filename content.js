@@ -1,5 +1,4 @@
 let hiddenElements = [];
-let OnYoutube = false;
 function removeElementsWithShorts() {
   console.log('Hiding elements with "/shorts/"');
   const anchors = document.getElementsByTagName('a');
@@ -36,12 +35,11 @@ if (isYouTubeDomain()) {
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   
-  if(OnYoutube){
     if (request.action === 'hideShorts') {
       removeElementsWithShorts();
     } else if (request.action === 'showShorts') {
       restoreHiddenElements();
-    }
+    
 
   }
 
