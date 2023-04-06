@@ -22,16 +22,21 @@ function restoreHiddenElements() {
 }
 
 // Check if the current URL is a YouTube domain
-function isYouTubeDomain() {
-  const currentURL = window.location.href;
-  return currentURL.includes('youtube.com');
+
+function init() {
+    chrome.storage.sync.get('shortsHidden', (data) => {
+      if (data.shortsHidden) {
+        removeElementsWithShorts();
+      }
+    });
 }
 
+// Wait for DOMContentLoaded event before calling init()
+document.addEventListener('DOMContentLoaded', init);
+
+
 // Automatically hide shorts elements on page load if on YouTube
-if (isYouTubeDomain()) {
-    OnYoutube = true;
-  removeElementsWithShorts();
-}
+
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   
