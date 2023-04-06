@@ -1,9 +1,9 @@
-document.getElementById('hideBtn').addEventListener('click', async () => {
-  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-  chrome.tabs.sendMessage(tab.id, { action: 'hideShorts' });
+document.getElementById('hideShortsBtn').addEventListener('click', () => {
+  chrome.runtime.sendMessage({ action: 'hideShorts' });
+  chrome.storage.sync.set({ shortsHidden: true });
 });
 
-document.getElementById('showBtn').addEventListener('click', async () => {
-  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-  chrome.tabs.sendMessage(tab.id, { action: 'showShorts' });
+document.getElementById('showShortsBtn').addEventListener('click', () => {
+  chrome.runtime.sendMessage({ action: 'showShorts' });
+  chrome.storage.sync.set({ shortsHidden: false });
 });
